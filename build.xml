@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. --><project basedir="." name="Project1">
+    <property environment="env"/>
+    <property name="ECLIPSE_HOME" value="../../eclipse/java-oxygen/Eclipse.app/Contents/Eclipse/"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.8"/>
+    <property name="source" value="1.8"/>
+
+    <path id="JUnit 4.libraryclasspath">
+        <pathelement location="lib/junit.jar"/>
+        <pathelement location="lib/org.hamcrest.core_1.3.0.v201303031735.jar"/>
+    </path>
+    <path id="Project1.classpath">
+        <pathelement location="bin"/>
+        <path refid="JUnit 4.libraryclasspath"/>
+    </path>
+              	
+    <!--  Running "ant init" should create the "bin/dist/doc" directories  -->	
+    <target name="init">
+        <mkdir dir="bin"/>
+    	 	<mkdir dir="dist" />
+    		<mkdir dir="doc" />
+    </target>
+              	
+    <!-- Running "ant clean" should delete the "bin/dist/doc" directories  -->
+    <target name="clean">
+    		<delete dir="dist" />
+        <delete dir="bin"/>
+    		<delete dir="doc"/>
+    </target>
+    
+    <!-- Running "ant compile" should compile "src/*.java" to "bin/*.class"  -->
+    <target description="compile project with Eclipse compiler" name="compile"  depends = "init">
+    		<javac destdir="bin" debug="true" srcdir="src" includeantruntime = "false">
+    			<classpath refid="Project1.classpath"/>
+    		</javac>
+    </target>
+              	
+    <!-- Running "ant test" should run the JUnit tests you’ve written -->
+    <target name="test" depends="compile">
+        <junit printsummary="yes" haltonfailure="no">
+            <classpath refid="Project1.classpath" />
+              	<batchtest fork="no">
+              		<fileset dir="bin" includes="Test*.class"/>
+              	</batchtest>
+        </junit>
+     </target>
+              	
+     <!-- Running "ant doc" should generate HTML files in the "doc" directory-->
+     <target name="doc" description="Generate the Javadoc HTML pages.">  
+            <delete dir="doc" />  
+            <mkdir dir="doc" />  
+            <javadoc 
+            			destdir="doc" 
+            			sourcepath="src" >  
+            		<fileset dir="."/>
+            		<classpath refid="Project1.classpath" />
+             </javadoc>  
+     </target>  
+              	
+     <!--Running "ant dist" should transform "bin/*.class" to "dist/*.jar" -->
+	 <target name="dist" depends="compile" description="make jar file">
+          <jar jarfile="dist/project1.jar" basedir="bin"/>
+      </target>
+
+</project>
