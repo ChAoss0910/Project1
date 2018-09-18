@@ -1,8 +1,4 @@
-Destination		Flight Route From P			Total Cost
-W 				P, W    			200
-R 				P, R    			300
-X 				P, R, X  			500
-S 				P, W, S  			450
-T 				P, W, S, T			750
-Y 				P, W, Y  			700
-Z 				P, W, Y, Z			1150
+Destination		Flight Route From A          Total Cost
+   B		        A, B                       100
+   C		        A, C                       100
+   D		        A, C, D                    200

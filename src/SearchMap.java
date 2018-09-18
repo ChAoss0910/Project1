@@ -31,7 +31,7 @@ import java.io.FileWriter;
 public class SearchMap {
 	public static void main(String args[]) {
 		try {
-			String inputName = "../input.txt";
+			String inputName = "../"+ args[0];
 			FlightMap flightMap = new FlightMap();
 			List<Flight> flights = flightMap.flights;
 			List<String> destination = flightMap.destination;
@@ -75,12 +75,18 @@ public class SearchMap {
 			path.push(origin);
 			flightMap.dfs(origin, path);
 			
-			File writename = new File("../output.txt"); 
+            File writename = new File("../" + args[1]);
 			writename.createNewFile();
 			BufferedWriter out = new BufferedWriter(new FileWriter(writename));
-			out.write("Destination		Flight Route From "+origin+"			Total Cost\r\n"); 
+			out.write("Destination		Flight Route From "+origin);
+            int maxLen = flightMap.getMaxLength();
+            int spaceSize = Math.max(maxLen*2,19);
+            String spaces = "";
+            for(int i = 0; i < spaceSize - 9 ; i++){
+                spaces += " ";
+            }
+            out.write(spaces + "Total Cost\r\n");
 			
-			int maxLen = flightMap.getMaxLength();
 			for(String target:destination) {
 				
 				Flight cur = new Flight(origin, target);
@@ -97,7 +103,7 @@ public class SearchMap {
 				}
 				if(currPath == null)
 					continue;
-				out.write(target+" 				" );
+				out.write("   " + target + "		        " );
 				Stack<String> reverse = new Stack<String>();
 				while(!currPath.isEmpty()) {
 					String currCity = currPath.pop();
@@ -107,8 +113,14 @@ public class SearchMap {
 					String currCity= reverse.pop();
 					if(reverse.size() != 0)
 						out.write(currCity+", ");
-					else
-						out.write(currCity+supp+"			"+cost+"\r\n");
+                    else{
+                        out.write(currCity+supp);
+                        String s = "";
+                        for(int j = 0; j < remain + 20;j++)
+                            s += " ";
+                        out.write(s+cost+"\r\n");
+                    }
+						
 				}
 			}
 			out.flush();
